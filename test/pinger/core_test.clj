@@ -2,6 +2,17 @@
   (:require [clojure.test :refer :all]
             [pinger.core :refer :all]))
 
-(deftest a-test
-  (testing "FIXME, I fail."
-    (is (= 0 1))))
+(deftest initialize-person-test
+  (testing "Person that has never been pinged gets 0 pings"
+    (is (= {:name "foo bar" :times-pinged 0}
+           (initialize-person "foo bar"))))
+  (testing "Person that has already been pinged"
+    (is (= {:name "foo bar" :times-pinged 30}
+           (initialize-person "foo bar, 30")))))
+
+(deftest read-people-test
+  (testing "Read a file and return a sequence with an array of maps"
+    (is (= [{:name "foo bar"  :times-pinged 0}
+            {:name "John Doe" :times-pinged 3}
+            {:name "Jane Roe" :times-pinged 39}]
+           (read-people "test/data/small-test-list")))))
