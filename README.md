@@ -11,4 +11,5 @@ Run with a cronjob every week.
 ## License
 
 Copyright © 2015 Daniel Lobato García
-See [LICENSE](LICENSE).
+
+GPLv3 licensed, see [LICENSE](LICENSE) for details.
