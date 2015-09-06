@@ -25,3 +25,6 @@
             {:name "John Doe" :times-pinged 3}
             {:name "Jane Roe" :times-pinged 39}]
            (read-people "test/data/small-test-list")))))
+
+(deftest send-mail-test
+  (testing "Given an email and a string, send a reminder"))
