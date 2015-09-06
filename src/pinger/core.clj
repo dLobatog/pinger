@@ -35,8 +35,9 @@
 
 (defn send-email
   [person]
-  (let [email ""
-        pass ""
+  (let [credentials (file-to-line-seq (str (System/getProperty "user.home") "/.pinger"))
+        email (first credentials)
+        pass  (last  credentials)
         conn {:host "smtp.gmail.com" :ssl true :user email :pass pass}]
     (send-message conn {:from email :to email
                         :subject (str "Weekly reminder: Reconnect with " (upper-case person))
