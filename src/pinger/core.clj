@@ -4,6 +4,11 @@
 (require '[postal.core :refer [send-message]])
 (use 'clojure.string)
 
+(defn increment-ping-count
+  "Increment ping count on a person data structure"
+  [person]
+  {:name (:name person) :times-pinged (+ 1 (:times-pinged person))})
+
 (defn initialize-person
   "Create a person structure defined by '$NAME, $PINGS'"
   [raw-person-string]
@@ -45,11 +50,17 @@
 
 (defn random-person
   [file]
-  (:name (rand-nth (find-least-pinged (read-people (first file))))))
+  (rand-nth (find-least-pinged (read-people (first file)))))
+
+(defn ping
+  [person]
+  (do (send-email (:name person))
+    (println "Reminder to ping - " (:name person)
+             " - you've pinged this person " (:times-pinged (increment-ping-count person)))))
 
 (defn -main
   "Pick randomly someone to ping in the list of people"
   [& args]
   (if (== 1 (count args))
-    (send-email (random-person args))
+    (ping (random-person args))
     (println "Usage: pinger FILE")))

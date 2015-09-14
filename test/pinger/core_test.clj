@@ -26,5 +26,7 @@
             {:name "Jane Roe" :times-pinged 39}]
            (read-people "test/data/small-test-list")))))
 
-(deftest send-mail-test
-  (testing "Given an email and a string, send a reminder"))
+(deftest increment-ping-count-text
+  (testing "Increment a person's ping count")
+    (is (= {:name "foo" :times-pinged 1}
+           (increment-ping-count {:name "foo" :times-pinged 0}))))
