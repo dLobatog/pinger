@@ -38,6 +38,14 @@
   (let [least-pinged (apply min (map :times-pinged people))]
     (filter (fn [x] (= (:times-pinged x) least-pinged)) people)))
 
+(defn update-people-list
+  "Update ping counter of person in people list"
+  [people person-pinged]
+  (map (fn [person-in-list]
+         (if (= (:name person-in-list) (:name person-pinged))
+           person-pinged
+           person-in-list)) people))
+
 (defn send-email
   [person]
   (let [credentials (file-to-line-seq (str (System/getProperty "user.home") "/.pinger"))
@@ -48,13 +56,18 @@
                         :subject (str "Weekly reminder: Reconnect with " (upper-case person))
                         :body (str "ping " (upper-case person))})))
 
+(defn save-list-to-disk
+  [person-pinged file]
+  (let [raw-seq (update-people-list (read-people file) person-pinged)]))
+
 (defn random-person
   [file]
   (rand-nth (find-least-pinged (read-people (first file)))))
 
 (defn ping
   [person]
-  (do (send-email (:name person))
+  (do
+    (send-email (:name person))
     (println "Reminder to ping - " (:name person)
              " - you've pinged this person " (:times-pinged (increment-ping-count person)))))
 
@@ -62,5 +75,8 @@
   "Pick randomly someone to ping in the list of people"
   [& args]
   (if (== 1 (count args))
-    (ping (random-person args))
+    (let [person-pinged (random-person args)]
+      (do
+        (ping person-pinged)
+        (save-list-to-disk person-pinged (first args))))
     (println "Usage: pinger FILE")))

@@ -26,7 +26,16 @@
             {:name "Jane Roe" :times-pinged 39}]
            (read-people "test/data/small-test-list")))))
 
-(deftest increment-ping-count-text
+(deftest increment-ping-count-test
   (testing "Increment a person's ping count")
     (is (= {:name "foo" :times-pinged 1}
            (increment-ping-count {:name "foo" :times-pinged 0}))))
+
+(deftest update-people-list-test
+  (testing "Update list of people after pinged")
+    (is (= [{:name "foo bar"  :times-pinged 2}
+            {:name "John Doe" :times-pinged 0}]
+           (update-people-list
+             [{:name "foo bar"  :times-pinged 1}
+              {:name "John Doe" :times-pinged 0}]
+             {:name "foo bar" :times-pinged 2}))))
