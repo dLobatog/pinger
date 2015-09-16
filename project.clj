@@ -1,4 +1,4 @@
-(defproject pinger "0.1.0-SNAPSHOT"
+(defproject pinger "1.0.0"
   :description "Get a weekly email that reminds you to reconnect with people"
   :url "http://github.com/elobato/pinger"
   :license {:name "Eclipse Public License"
