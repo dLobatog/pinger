@@ -1,6 +1,6 @@
 # pinger
 
-Get a periodic email that reminds you to reconnect with people.
+Get a periodic email that reminds you to reconnect with people. :two_women_holding_hands: :couple: :two_men_holding_hands: 
 
 ## Build
 
@@ -38,6 +38,12 @@ or this if you are in a non-UNIX environment.
     $ java -jar pinger-version-standalone.jar list_of_people_to_ping
 
 I recommend to run it using a cronjob every week (or whatever frequency you prefer!)
+
+## TODO
+
+* GPG-decrypt email password
+* Packaging (rpm/deb/homebrew)
+* Script to add pinger to crontab
 
 ## License
 
