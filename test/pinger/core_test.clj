@@ -39,3 +39,7 @@
              [{:name "foo bar"  :times-pinged 1}
               {:name "John Doe" :times-pinged 0}]
              {:name "foo bar" :times-pinged 2}))))
+
+(deftest get-email-domain-test
+  (testing "Returns domain from email")
+    (is (= "example.com" (get-email-domain "foo.bar@example.com"))))

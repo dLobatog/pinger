@@ -1,8 +1,8 @@
 (ns pinger.core
   (:gen-class))
 (require '[clojure.java [io :as io]])
+(require '[clojure.string :as string])
 (require '[postal.core :refer [send-message]])
-(use 'clojure.string)
 
 (defn increment-ping-count
   "Increment ping count on a person data structure"
@@ -12,7 +12,7 @@
 (defn initialize-person
   "Create a person structure defined by '$NAME, $PINGS'"
   [raw-person-string]
-  (let [raw-person-array (map trim (split raw-person-string #","))]
+  (let [raw-person-array (map string/trim (string/split raw-person-string #","))]
     {:name (first raw-person-array)
      :times-pinged (if (= 1 (count raw-person-array))
                      0
@@ -46,15 +46,20 @@
            person-pinged
            person-in-list)) people))
 
+(defn get-email-domain
+  "Returns domain from email"
+  [email]
+  (last (string/split email #"@")))
+
 (defn send-email
   [person]
   (let [credentials (file-to-line-seq (str (System/getProperty "user.home") "/.pinger"))
         email (first credentials)
         pass  (last  credentials)
-        conn {:host "smtp.gmail.com" :ssl true :user email :pass pass}]
+        conn {:host (str "smtp." (get-email-domain email)) :ssl true :user email :pass pass}]
     (send-message conn {:from email :to email
-                        :subject (str "Weekly reminder: Reconnect with " (upper-case person))
-                        :body (str "ping " (upper-case person))})))
+                        :subject (str "Weekly reminder: Reconnect with " (string/upper-case person))
+                        :body (str "ping " (string/upper-case person))})))
 
 (defn person-to-string
   "Turns a person vector into a string"
@@ -64,7 +69,7 @@
 (defn people-to-string
   "Turns a people vector into a string"
   [people]
-  (join "\n" (map person-to-string people)))
+  (string/join "\n" (map person-to-string people)))
 
 (defn save-list-to-disk
   [person-pinged file]
