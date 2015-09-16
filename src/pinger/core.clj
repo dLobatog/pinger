@@ -56,9 +56,21 @@
                         :subject (str "Weekly reminder: Reconnect with " (upper-case person))
                         :body (str "ping " (upper-case person))})))
 
+(defn person-to-string
+  "Turns a person vector into a string"
+  [person]
+  (str (:name person) ", " (:times-pinged person)))
+
+(defn people-to-string
+  "Turns a people vector into a string"
+  [people]
+  (join "\n" (map person-to-string people)))
+
 (defn save-list-to-disk
   [person-pinged file]
-  (let [raw-seq (update-people-list (read-people file) person-pinged)]))
+  (let [raw-seq (update-people-list (read-people file)
+                                    (increment-ping-count person-pinged))]
+    (spit file (people-to-string raw-seq))))
 
 (defn random-person
   [file]
