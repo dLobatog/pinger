@@ -1,6 +1,6 @@
 # pinger
 
-Get a periodic email that reminds you to reconnect with people. :two_women_holding_hands: :couple: :two_men_holding_hands: 
+Get a periodic email that reminds you to reconnect with people. :two_women_holding_hands: :couple: :two_men_holding_hands:
 
 ## Build
 
@@ -31,7 +31,7 @@ next to its name in the list.
 
 Run it passing the list of people as an argument using:
 
-    $ ./pinger
+    $ ./pinger list_of_people_to_ping
 
 or this if you are in a non-UNIX environment.
 
