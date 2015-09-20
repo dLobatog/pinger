@@ -1,7 +1,8 @@
-# pinger
+# pinger 
 
 Get a periodic email that reminds you to reconnect with people. :two_women_holding_hands: :couple: :two_men_holding_hands:
 
+[![Clojars Project](http://clojars.org/pinger/latest-version.svg)](http://clojars.org/pinger)
 ## Build
 
 Build the app into an uberjar (standalone jar) using Leiningen. Run:
